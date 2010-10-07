@@ -25,6 +25,14 @@
   (is (besetzt? [(cfield :land 5 5 "token")] 1 1)))
 
 (deftest set-token-test
-  (is  (= (:token (set-token board 2 2 "token"))
-          "token")))
+  (is  (= (set-token board 1 1 "token")
+          (assoc board 0 (cfield :land 1 1 "token")))))
 
+(deftest update-test
+  (let [new-board (set-token (init-board 1 1) 1 1 "token")]
+    (is (=  [(cfield :land 1 1 (seq "token"))]
+            (update new-board 1 1 seq)))))
+
+(deftest calc-pos-test
+  (is (= (calc-pos 1 1) 0))
+  (is (= (calc-pos 5 5) 44)))
